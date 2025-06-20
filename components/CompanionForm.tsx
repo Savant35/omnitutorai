@@ -198,11 +198,7 @@ const CompanionForm = () => {
                   {...field}
                   className="input" />
               </FormControl>
-              {/*
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
-              */}
+              
               <FormMessage />
             </FormItem>
           )}
