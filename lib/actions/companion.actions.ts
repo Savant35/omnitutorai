@@ -171,7 +171,6 @@ export const removeBookmark = async (companionId: string, path: string) => {
   return data;
 };
 
-// It's almost the same as getUserCompanions, but it's for the bookmarked companions
 export const getBookmarkedCompanions = async (userId: string) => {
   const supabase = createSupabaseClient();
   const { data, error } = await supabase
@@ -181,6 +180,5 @@ export const getBookmarkedCompanions = async (userId: string) => {
   if (error) {
     throw new Error(error.message);
   }
-  // We don't need the bookmarks data, so we return only the companions
   return data.map(({ companions }) => companions);
 };
