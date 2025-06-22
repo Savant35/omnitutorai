@@ -21,7 +21,12 @@ export default function RootLayout({ children,}: Readonly<{children: React.React
     <html lang="en" suppressHydrationWarning>
       <body className={`${bricolage.variable} antialiased`}>
           <ClerkProvider appearance={{ variables: { colorPrimary: "#fe5933" } }}>
-            <ThemeProvider>
+            <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
             <Navbar />
             {children}
             </ThemeProvider>
