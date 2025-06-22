@@ -14,7 +14,6 @@ interface CompanionCardProps {
   color: string;
   bookmarked: boolean;
 }
-
 const CompanionCard = ({
   id,
   name,
@@ -24,7 +23,9 @@ const CompanionCard = ({
   color,
   bookmarked,
 }: CompanionCardProps) => {
+  console.log("bookmarked", bookmarked);
   const pathname = usePathname();
+
   const handleBookmark = async () => {
     if (bookmarked) {
       await removeBookmark(id, pathname);
