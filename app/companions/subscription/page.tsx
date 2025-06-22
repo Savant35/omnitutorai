@@ -2,9 +2,9 @@ import { PricingTable } from "@clerk/nextjs"
 
 const page = () => {
   return (
-    <div>
+    <main>
       <PricingTable/>
-    </div>
+    </main>
   )
 }
 
