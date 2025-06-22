@@ -33,7 +33,9 @@ const CompanionCard = ({
     }
   };
   return (
-    <article className="companion-card" style={{ backgroundColor: color }}>
+    <article
+  className="companion-card bg-[var(--card-bg)] dark:bg-[var(--black-color-light)]"
+  style={{ "--card-bg": color } as React.CSSProperties}>
       <div className="flex justify-between items-center">
         <div className="subject-badge">{subject}</div>
         <button className="companion-bookmark" onClick={handleBookmark}>
