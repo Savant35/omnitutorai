@@ -1,7 +1,7 @@
 import Link from "next/link"
 import Image from "next/image"
 import NavItems from "./NavItems"
-import { SignInButton,SignIn,SignedOut,UserButton, SignedIn } from "@clerk/nextjs"
+import { SignInButton,SignedOut,UserButton, SignedIn } from "@clerk/nextjs"
 import { ModeToggle } from "./ModeToggle"
 
 const Navbar = () => {

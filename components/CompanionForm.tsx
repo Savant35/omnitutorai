@@ -33,7 +33,7 @@ const formSchema = z.object({
     voice: z.string().min(1, { message: 'Voice is required.' }),
     style: z.string().min(1, { message: 'Style is required.' }),
     duration: z.coerce.number().min(1, { message: 'Duration is required.' }),
-    lessonPlanFile: z.any().optional().refine(files => !files || files.length <=1,"Please upload only one file."),
+    lessonPlanFile: z.any().optional().refine(files => !files || files.length <= 1, "Please upload only one file."),
 })
 
 const CompanionForm = () => {
@@ -200,18 +200,19 @@ const CompanionForm = () => {
                         <FormItem>
                             <FormLabel>Lesson Plan (optional)</FormLabel>
                             <FormControl>
-                                <input
+                                <Input
                                     type="file"
-                                    accept=".txt"
+                                    accept=".txt, .pdf, .docx"
                                     onChange={e => field.onChange(e.target.files)}
-                                    className="input"
+                                    className="cursor-pointer"
                                 />
                             </FormControl>
-                            <FormDescription>Upload a plain-text (.txt) lesson plan</FormDescription>
+                            <FormDescription>Upload a pdf, docx or txt lesson plan</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+
 
                 <FormField
                     control={form.control}
