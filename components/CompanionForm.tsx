@@ -21,18 +21,19 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import {subjects} from "@/constants";
-import {Textarea} from "@/components/ui/textarea";
-import {createCompanion} from "@/lib/actions/companion.actions";
-import {redirect} from "next/navigation";
+import { subjects } from "@/constants";
+import { Textarea } from "@/components/ui/textarea";
+import { createCompanion } from "@/lib/actions/companion.actions";
+import { redirect } from "next/navigation";
 
 const formSchema = z.object({
-    name: z.string().min(1, { message: 'Companion is required.'}),
-    subject: z.string().min(1, { message: 'Subject is required.'}),
-    topic: z.string().min(1, { message: 'Topic is required.'}),
-    voice: z.string().min(1, { message: 'Voice is required.'}),
-    style: z.string().min(1, { message: 'Style is required.'}),
-    duration: z.coerce.number().min(1, { message: 'Duration is required.'}),
+    name: z.string().min(1, { message: 'Companion is required.' }),
+    subject: z.string().min(1, { message: 'Subject is required.' }),
+    topic: z.string().min(1, { message: 'Topic is required.' }),
+    voice: z.string().min(1, { message: 'Voice is required.' }),
+    style: z.string().min(1, { message: 'Style is required.' }),
+    duration: z.coerce.number().min(1, { message: 'Duration is required.' }),
+    lessonPlanFile: z.any().optional().refine(files => !files || files.length <=1,"Please upload only one file."),
 })
 
 const CompanionForm = () => {
@@ -51,7 +52,7 @@ const CompanionForm = () => {
     const onSubmit = async (values: z.infer<typeof formSchema>) => {
         const companion = await createCompanion(values);
 
-        if(companion) {
+        if (companion) {
             redirect(`/companions/${companion.id}`);
         } else {
             console.log('Failed to create a companion');
@@ -187,6 +188,26 @@ const CompanionForm = () => {
                                     </SelectContent>
                                 </Select>
                             </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="lessonPlanFile"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Lesson Plan (optional)</FormLabel>
+                            <FormControl>
+                                <input
+                                    type="file"
+                                    accept=".txt"
+                                    onChange={e => field.onChange(e.target.files)}
+                                    className="input"
+                                />
+                            </FormControl>
+                            <FormDescription>Upload a plain-text (.txt) lesson plan</FormDescription>
                             <FormMessage />
                         </FormItem>
                     )}

@@ -33,6 +33,7 @@ interface CreateCompanion {
   voice: string;
   style: string;
   duration: number;
+  lessonPlanFile?: FileList;
 }
 
 interface GetAllCompanions {
