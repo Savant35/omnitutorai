@@ -172,3 +172,44 @@ export const getBookmarkedCompanions = async (userId: string) => {
     if (error) throw new Error(error.message);
     return data.flatMap(({ companions }) => companions);
 };
+
+
+export const getPopularCompanions = async (limit = 10) => {
+  const supabase = createSupabaseClient()
+
+  // 1) fetch every session’s companion_id
+  const { data: sessions, error: sessErr } = await supabase
+    .from('session_history')
+    .select('companion_id')
+  if (sessErr) throw new Error(sessErr.message)
+  if (!sessions) return []
+
+  // 2) count frequency in JS
+  const counts: Record<string, number> = {}
+  sessions.forEach(({ companion_id }) => {
+    if (companion_id) counts[companion_id] = (counts[companion_id] || 0) + 1
+  })
+
+  // 3) sort IDs by descending count, take top N
+  const topIds = Object.entries(counts)
+    .sort(([, aCount], [, bCount]) => bCount - aCount)
+    .slice(0, limit)
+    .map(([id]) => id)
+
+  if (topIds.length === 0) return []
+
+  // 4) fetch those companion records
+  const { data: comps, error: compErr } = await supabase
+    .from('companions')
+    .select('*')
+    .in('id', topIds)
+  if (compErr) throw new Error(compErr.message)
+  if (!comps) return []
+
+  // 5) re-order to match the topIds order
+  const byId = new Map(comps.map(c => [c.id, c]))
+  return topIds
+    .map(id => byId.get(id))
+    .filter((c): c is typeof comps[number] => Boolean(c))
+}
+
