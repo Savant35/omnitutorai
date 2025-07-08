@@ -5,8 +5,6 @@ import {getPopularCompanions, getUserSessions } from "@/lib/actions/companion.ac
 import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
 
-export const revalidate = 3600  // check if the data has changed every hour
-export const dynamic = 'force-dynamic'
 
 
 const Page = async () => {
