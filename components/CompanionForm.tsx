@@ -21,7 +21,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-import { subjects } from "@/constants";
+import { subjects, voices } from "@/constants";
 import { Textarea } from "@/components/ui/textarea";
 import { createCompanion } from "@/lib/actions/companion.actions";
 import { redirect } from "next/navigation";
@@ -148,12 +148,11 @@ const CompanionForm = () => {
                                         />
                                     </SelectTrigger>
                                     <SelectContent>
-                                        <SelectItem value="male">
-                                            Male
-                                        </SelectItem>
-                                        <SelectItem value="female">
-                                            Female
-                                        </SelectItem>
+                                        {Object.keys(voices).map((gender) => (
+                                            <SelectItem key={gender} value={gender}>
+                                                {gender.charAt(0).toUpperCase() + gender.slice(1)}
+                                            </SelectItem>
+                                        ))}
                                     </SelectContent>
                                 </Select>
                             </FormControl>

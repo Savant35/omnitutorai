@@ -23,7 +23,7 @@ const CompanionCard = ({
   color,
   bookmarked,
 }: CompanionCardProps) => {
-  console.log("bookmarked", bookmarked);
+  //console.log("bookmarked", bookmarked);
   const pathname = usePathname();
 
   const handleBookmark = async () => {

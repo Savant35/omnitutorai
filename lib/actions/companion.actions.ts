@@ -175,41 +175,47 @@ export const getBookmarkedCompanions = async (userId: string) => {
 
 
 export const getPopularCompanions = async (limit = 10) => {
-  const supabase = createSupabaseClient()
+  const { userId } = await auth();
+  const supabase = createSupabaseClient();
 
-  // 1) fetch every session’s companion_id
+  // fetch all session entries
   const { data: sessions, error: sessErr } = await supabase
     .from('session_history')
-    .select('companion_id')
-  if (sessErr) throw new Error(sessErr.message)
-  if (!sessions) return []
+    .select('companion_id');
+  if (sessErr) throw new Error(sessErr.message);
 
-  // 2) count frequency in JS
-  const counts: Record<string, number> = {}
-  sessions.forEach(({ companion_id }) => {
-    if (companion_id) counts[companion_id] = (counts[companion_id] || 0) + 1
-  })
+  //count how many times each companion_id appears
+  const counts: Record<string, number> = {};
+  sessions?.forEach((s: { companion_id: string }) => {
+    counts[s.companion_id] = (counts[s.companion_id] || 0) + 1;
+  });
 
-  // 3) sort IDs by descending count, take top N
-  const topIds = Object.entries(counts)
-    .sort(([, aCount], [, bCount]) => bCount - aCount)
+  //sort the ids by descending count, then take the top `limit`
+  const sortedIds = Object.entries(counts)
+    .sort(([, a], [, b]) => b - a)
     .slice(0, limit)
-    .map(([id]) => id)
+    .map(([id]) => id);
+  if (sortedIds.length === 0) return [];
 
-  if (topIds.length === 0) return []
+  //fetch those companion records + this user’s bookmarks in parallel
+  const [{ data: comps, error: compErr }, { data: bmRows, error: bmErr }] =
+    await Promise.all([
+      supabase.from('companions').select().in('id', sortedIds),
+      supabase.from('bookmarks').select('companion_id').eq('user_id', userId),
+    ]);
+  if (compErr) throw new Error(compErr.message);
+  if (bmErr) throw new Error(bmErr.message);
 
-  // 4) fetch those companion records
-  const { data: comps, error: compErr } = await supabase
-    .from('companions')
-    .select('*')
-    .in('id', topIds)
-  if (compErr) throw new Error(compErr.message)
-  if (!comps) return []
+  const bookmarkedIds = new Set(bmRows.map((b: { companion_id: string }) => b.companion_id));
 
-  // 5) re-order to match the topIds order
-  const byId = new Map(comps.map(c => [c.id, c]))
-  return topIds
-    .map(id => byId.get(id))
-    .filter((c): c is typeof comps[number] => Boolean(c))
-}
+  //re-order by popularity & attach `bookmarked` flag
+  return sortedIds
+    .map((id) => {
+      const c = comps.find((c) => c.id === id);
+      return c ? { ...c, bookmarked: bookmarkedIds.has(id) } : null;
+    })
+    .filter((c): c is NonNullable<typeof c> => Boolean(c));
+};
+
+
 
