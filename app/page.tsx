@@ -1,7 +1,7 @@
 import CompanionCard from "@/components/CompanionCard";
 import CompanionList from "@/components/CompanionList";
 import CTA from "@/components/CTA";
-import { getRecentSessions, getPopularCompanions, getUserSessions } from "@/lib/actions/companion.actions";
+import {getPopularCompanions, getUserSessions } from "@/lib/actions/companion.actions";
 import { getSubjectColor } from "@/lib/utils";
 import { currentUser } from "@clerk/nextjs/server";
 
