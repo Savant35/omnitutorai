@@ -1,15 +1,5 @@
-
-enum Subject {
-  maths = "maths",
-  language = "language",
-  science = "science",
-  history = "history",
-  coding = "coding",
-  geography = "geography",
-  economics = "economics",
-  finance = "finance",
-  business = "business",
-}
+import type { Models } from "appwrite";
+import type { Subject } from "@/constants";
 
 type Companion = Models.DocumentList<Models.Document> & {
   $id: string;
@@ -22,7 +12,7 @@ type Companion = Models.DocumentList<Models.Document> & {
 
 interface CreateCompanion {
   name: string;
-  subject: string;
+  subject: Subject;
   topic: string;
   voice: string;
   style: string;
@@ -33,7 +23,7 @@ interface CreateCompanion {
 interface GetAllCompanions {
   limit?: number;
   page?: number;
-  subject?: string | string[];
+  subject?: Subject | Subject[];
   topic?: string | string[];
 }
 
@@ -68,7 +58,7 @@ interface SavedMessage {
 
 interface CompanionComponentProps {
   companionId: string;
-  subject: string;
+  subject: Subject;
   topic: string;
   name: string;
   userName: string;
