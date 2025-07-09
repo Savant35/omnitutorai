@@ -1,5 +1,4 @@
 import type { Models } from "appwrite";
-import type { Subject } from "@/constants";
 
 type Companion = Models.DocumentList<Models.Document> & {
   $id: string;

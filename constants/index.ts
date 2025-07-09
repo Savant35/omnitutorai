@@ -12,13 +12,15 @@ export type Subject = typeof subjects[number]["id"];
 
 
 export const subjectsColors = {
-  science: "#E5D0FF",
-  maths: "#FFDA6E",
-  language: "#BDE7FF",
-  coding: "#FFC8E4",
-  history: "#FFECC8",
-  economics: "#C8FFDF",
+  sciences:   "#E5D0FF",  // lavender (Natural Sciences)
+  maths:      "#FFDA6E",  // buttery yellow
+  language:   "#BDE7FF",  // sky blue
+  coding:     "#FFC8E4",  // rose pink
+  history:    "#FFECC8",  // apricot
+  economics:  "#C8FFDF",  // mint
+  Philosophy: "#E0BBE4",  // pastel purple
 };
+
 
 export const voices = {
   male: { casual: "2BJW5coyhAzSr8STdHbE", formal: "c6SfcYrb2t09NHXiT80T" },
