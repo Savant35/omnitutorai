@@ -35,6 +35,7 @@ const formSchema = z.object({
     style: z.string().min(1, { message: 'Style is required.' }),
     duration: z.coerce.number().min(1, { message: 'Duration is required.' }),
     lessonPlanFile: z.any().optional().refine(files => !files || files.length <= 1, "Please upload only one file."),
+    instructions: z.string().optional(),
 })
 
 const CompanionForm = () => {
@@ -47,6 +48,7 @@ const CompanionForm = () => {
             voice: '',
             style: '',
             duration: 15,
+            instructions: '',
         },
     })
 
@@ -219,6 +221,24 @@ const CompanionForm = () => {
                                 <Input
                                     type="number"
                                     placeholder="15"
+                                    {...field}
+                                    className="input"
+                                />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="instructions"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel>Additional Instructions (optional)</FormLabel>
+                            <FormControl>
+                                <Textarea
+                                    placeholder="e.g. Use simple sentences,” “be concise, …"
                                     {...field}
                                     className="input"
                                 />

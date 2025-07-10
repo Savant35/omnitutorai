@@ -17,6 +17,7 @@ interface CreateCompanion {
   style: string;
   duration: number;
   lessonPlanFile?: FileList;
+  instructions?: string; 
 }
 
 interface GetAllCompanions {
@@ -64,4 +65,5 @@ interface CompanionComponentProps {
   userImage: string;
   voice: string;
   style: string;
+  instructions?: string;
 }

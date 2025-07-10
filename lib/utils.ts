@@ -58,7 +58,8 @@ export const configureAssistant = (voice: string, style: string) => {
 
                   8. Avoid introducing content or definitions that contradict or deviate from the lesson plan and provided course materials.
 
-                  9. Refrain from using any special characters in your responses.`,
+                  9. Refrain from using any special characters in your responses.
+                  10. IMPORTANT: Follow any additional instructions provided here in addition to all rules above. If this field is empty or contains no meaningful instructions, simply continue following the rules above as usual. {{ instructions }}`,
         },
       ],
     },
