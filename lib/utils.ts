@@ -11,15 +11,21 @@ export const getSubjectColor = (subject: Subject) => {
   return subjectsColors[subject as keyof typeof subjectsColors];
 };
 
-export const configureAssistant = (voice: string, style: string) => {
+
+
+
+export const configureAssistant = (voice: string, style: string, resumeHistory?: string) => {
   const voiceId = voices[voice as keyof typeof voices][
     style as keyof (typeof voices)[keyof typeof voices]
   ] || "sarah";
 
+  const firstMessage = resumeHistory
+  ? "Welcome back! Let's continue from where we left off."
+  : "Hello, let's start the session. Today we'll be talking about {{topic}}.";
+
   const vapiAssistant: CreateAssistantDTO = {
     name: "Companion",
-    firstMessage:
-      "Hello, let's start the session. Today we'll be talking about {{topic}}.",
+    firstMessage,
     transcriber: {
       provider: "deepgram",
       model: "nova-3",
@@ -59,7 +65,12 @@ export const configureAssistant = (voice: string, style: string) => {
                   8. Avoid introducing content or definitions that contradict or deviate from the lesson plan and provided course materials.
 
                   9. Refrain from using any special characters in your responses.
-                  10. IMPORTANT: Follow any additional instructions provided here in addition to all rules above. If this field is empty or contains no meaningful instructions, simply continue following the rules above as usual. {{ instructions }}`,
+
+                  10. IMPORTANT: Follow any additional instructions provided here in addition to all rules above. If this field is empty or contains no meaningful instructions, simply continue following the rules above as usual. {{ instructions }}
+
+                  **Conversation so far:**  
+                  if resuming a previous session say somehting like today we will continue from where we left off then state the last place they you left of from.{{ resumeHistory }}
+                  `.trim(),
         },
       ],
     },
