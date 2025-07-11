@@ -1,5 +1,5 @@
 // app/companions/[id]/page.tsx
-import { getCompanion } from "@/lib/actions/companion.actions";
+import { getCompanion, getLastSessionHistory } from "@/lib/actions/companion.actions";
 import { currentUser } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { getSubjectColor } from "@/lib/utils";
@@ -25,6 +25,8 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
   const cfg = subjects.find((s) => s.id === subject)!;
   const iconUrl = cfg.icon;
   const label = cfg.label;
+
+  const resumeMessages = await getLastSessionHistory(id);
 
   return (
     <main>
@@ -55,6 +57,7 @@ const CompanionSession = async ({ params }: CompanionSessionPageProps) => {
         companionId={id}
         userName={user.firstName!}
         userImage={user.imageUrl!}
+        resumeMessages={resumeMessages}
       />
     </main>
   );

@@ -66,4 +66,5 @@ interface CompanionComponentProps {
   voice: string;
   style: string;
   instructions?: string;
+  resumeMessages?: SavedMessage[];
 }

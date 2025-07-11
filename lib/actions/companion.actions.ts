@@ -5,36 +5,35 @@ import { createSupabaseClient } from "@/lib/supabase";
 import { revalidatePath } from "next/cache";
 import { CreateCompanion, GetAllCompanions } from "@/types";
 
-export const createCompanion = async (
-  formData: CreateCompanion & { lessonPlanFile?: FileList }
-) => {
-  const { userId: author } = await auth();
-  const supabase = createSupabaseClient();
 
-  const { lessonPlanFile, ...companionData } = formData;
+export const createCompanion = async (formData: CreateCompanion & { lessonPlanFile?: FileList }) => {
+    const { userId: author } = await auth();
+    const supabase = createSupabaseClient();
 
-  let lesson_plan_url: string | null = null;
-  if (lessonPlanFile?.length) {
-    const file = lessonPlanFile[0];
-    const path = `lesson-plans/${Date.now()}_${file.name}`;
-    const { error: uploadError } = await supabase.storage
-      .from("lesson-plans")
-      .upload(path, file);
-    if (uploadError) throw new Error(uploadError.message);
+    const { lessonPlanFile, ...companionData } = formData;
 
-    const { publicUrl } =
-      supabase.storage.from("lesson-plans").getPublicUrl(path).data;
-    lesson_plan_url = publicUrl;
-  }
+    let lesson_plan_url: string | null = null;
+    if (lessonPlanFile?.length) {
+        const file = lessonPlanFile[0];
+        const path = `lesson-plans/${Date.now()}_${file.name}`;
+        const { error: uploadError } = await supabase.storage
+            .from("lesson-plans")
+            .upload(path, file);
+        if (uploadError) throw new Error(uploadError.message);
 
-  const { data, error } = await supabase
-    .from("companions")
-    .insert({ ...companionData, author, lesson_plan_url })
-    .select();
+        const { publicUrl } =
+            supabase.storage.from("lesson-plans").getPublicUrl(path).data;
+        lesson_plan_url = publicUrl;
+    }
 
-  if (error || !data) throw new Error(error?.message || 'Failed to create a companion');
+    const { data, error } = await supabase
+        .from("companions")
+        .insert({ ...companionData, author, lesson_plan_url })
+        .select();
 
-  return data[0];
+    if (error || !data) throw new Error(error?.message || 'Failed to create a companion');
+
+    return data[0];
 };
 
 
@@ -76,15 +75,43 @@ export const getCompanion = async (id: string) => {
     return data[0];
 };
 
-export const addToSessionHistory = async (companionId: string) => {
+/** Define the shape of a saved transcript message */
+export type SavedMessage = {
+    role: "user" | "assistant" | "system";
+    content: string;
+};
+
+/** Save a full transcript array when a session ends */
+export async function addToSessionHistory(
+    companionId: string,
+    messages: SavedMessage[]
+) {
     const { userId } = await auth();
     const supabase = createSupabaseClient();
     const { data, error } = await supabase
-        .from('session_history')
-        .insert({ companion_id: companionId, user_id: userId });
+        .from("session_history")
+        .insert({ companion_id: companionId, user_id: userId, messages });
     if (error) throw new Error(error.message);
     return data;
-};
+}
+
+/** Fetch the most‐recent transcript array for this companion & user */
+export async function getLastSessionHistory(
+    companionId: string
+): Promise<SavedMessage[]> {
+    const { userId } = await auth();
+    const supabase = createSupabaseClient();
+    const { data, error } = await supabase
+        .from("session_history")
+        .select("messages")
+        .eq("companion_id", companionId)
+        .eq("user_id", userId)
+        .order("created_at", { ascending: false })
+        .limit(1);
+    if (error) throw new Error(error.message);
+    return data?.[0]?.messages || [];
+}
+
 
 export const getRecentSessions = async (limit = 10) => {
     const supabase = createSupabaseClient();
@@ -176,46 +203,46 @@ export const getBookmarkedCompanions = async (userId: string) => {
 
 
 export const getPopularCompanions = async (limit = 10) => {
-  const { userId } = await auth();
-  const supabase = createSupabaseClient();
+    const { userId } = await auth();
+    const supabase = createSupabaseClient();
 
-  // fetch all session entries
-  const { data: sessions, error: sessErr } = await supabase
-    .from('session_history')
-    .select('companion_id');
-  if (sessErr) throw new Error(sessErr.message);
+    // fetch all session entries
+    const { data: sessions, error: sessErr } = await supabase
+        .from('session_history')
+        .select('companion_id');
+    if (sessErr) throw new Error(sessErr.message);
 
-  //count how many times each companion_id appears
-  const counts: Record<string, number> = {};
-  sessions?.forEach((s: { companion_id: string }) => {
-    counts[s.companion_id] = (counts[s.companion_id] || 0) + 1;
-  });
+    //count how many times each companion_id appears
+    const counts: Record<string, number> = {};
+    sessions?.forEach((s: { companion_id: string }) => {
+        counts[s.companion_id] = (counts[s.companion_id] || 0) + 1;
+    });
 
-  //sort the ids by descending count, then take the top `limit`
-  const sortedIds = Object.entries(counts)
-    .sort(([, a], [, b]) => b - a)
-    .slice(0, limit)
-    .map(([id]) => id);
-  if (sortedIds.length === 0) return [];
+    //sort the ids by descending count, then take the top `limit`
+    const sortedIds = Object.entries(counts)
+        .sort(([, a], [, b]) => b - a)
+        .slice(0, limit)
+        .map(([id]) => id);
+    if (sortedIds.length === 0) return [];
 
-  //fetch those companion records + this user’s bookmarks in parallel
-  const [{ data: comps, error: compErr }, { data: bmRows, error: bmErr }] =
-    await Promise.all([
-      supabase.from('companions').select().in('id', sortedIds),
-      supabase.from('bookmarks').select('companion_id').eq('user_id', userId),
-    ]);
-  if (compErr) throw new Error(compErr.message);
-  if (bmErr) throw new Error(bmErr.message);
+    //fetch those companion records + this user’s bookmarks in parallel
+    const [{ data: comps, error: compErr }, { data: bmRows, error: bmErr }] =
+        await Promise.all([
+            supabase.from('companions').select().in('id', sortedIds),
+            supabase.from('bookmarks').select('companion_id').eq('user_id', userId),
+        ]);
+    if (compErr) throw new Error(compErr.message);
+    if (bmErr) throw new Error(bmErr.message);
 
-  const bookmarkedIds = new Set(bmRows.map((b: { companion_id: string }) => b.companion_id));
+    const bookmarkedIds = new Set(bmRows.map((b: { companion_id: string }) => b.companion_id));
 
-  //re-order by popularity & attach `bookmarked` flag
-  return sortedIds
-    .map((id) => {
-      const c = comps.find((c) => c.id === id);
-      return c ? { ...c, bookmarked: bookmarkedIds.has(id) } : null;
-    })
-    .filter((c): c is NonNullable<typeof c> => Boolean(c));
+    //re-order by popularity & attach `bookmarked` flag
+    return sortedIds
+        .map((id) => {
+            const c = comps.find((c) => c.id === id);
+            return c ? { ...c, bookmarked: bookmarkedIds.has(id) } : null;
+        })
+        .filter((c): c is NonNullable<typeof c> => Boolean(c));
 };
 
 
