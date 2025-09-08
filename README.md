@@ -82,12 +82,12 @@ NEXT_PUBLIC_VAPI_WEB_TOKEN=
 
 ## preview 
 <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width:100%">
-<img src="https://github.com/user-attachments/assets/bf537723-33f9-49b4-a36e-5ce7f83a0e6f" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
-<img src="https://github.com/user-attachments/assets/3cfc6d3e-5fd2-46db-97c6-a580936554ee" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
-<img src="https://github.com/user-attachments/assets/1e28f1e6-ff09-410d-b8b9-a75faa0963dd" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
-<img src="https://github.com/user-attachments/assets/f9d13f43-68af-4887-af66-6d17ef5460a8" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
-<img src="https://github.com/user-attachments/assets/f0d519b2-49b2-4a67-9267-bb80b409dfff" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
-<img src="https://github.com/user-attachments/assets/528cdfc7-1532-4b34-81ff-c3e25bc27d5b" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/bf537723-33f9-49b4-a36e-5ce7f83a0e6f" alt="Image" style="width: 48%; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/3cfc6d3e-5fd2-46db-97c6-a580936554ee" alt="Image" style="width: 48%; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/1e28f1e6-ff09-410d-b8b9-a75faa0963dd" alt="Image" style="width: 48%; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/f9d13f43-68af-4887-af66-6d17ef5460a8" alt="Image" style="width: 48%; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/f0d519b2-49b2-4a67-9267-bb80b409dfff" alt="Image" style="width: 48%; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/528cdfc7-1532-4b34-81ff-c3e25bc27d5b" alt="Image" style="width: 48%; height: 300px; object-fit: cover;">
 </div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
