@@ -3,10 +3,9 @@
 <br />
 <div align="center">
 
-  <h3 align="center">Omnitutor</h3>
-
+  <h2 align="center">Omnitutor</h2>
   <p align="center">
-    An exceptional graphical user interface (GUI) application designed to discover new movies or shows and provide comprehensive information for viewing purposes.
+    Omnitutor personalizes education by transforming your teaching materials into an on-demand AI tutor for every student.
     <br />
     <a href="#preview">Preview</a>
     ·
