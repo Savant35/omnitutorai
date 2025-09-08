@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<a name="readme-top"></a>
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
 
+  <h3 align="center">Omnitutor</h3>
+
+  <p align="center">
+    An exceptional graphical user interface (GUI) application designed to discover new movies or shows and provide comprehensive information for viewing purposes.
+    <br />
+    <a href="#preview">Preview</a>
+    ·
+    <a href="https://github.com/Savant35/omnitutorai/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/Savant35/omnitutorai/pulls">Request Feature</a>
+  </p>
+  
+</div>
+<!-- TABLE OF CONTENTS -->
+<details>
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+        <li><a href="#env-file">.env File</a></li>
+      </ul>
+    </li>
+    <li><a href="#preview">Preview</a></li>
+    <li><a href="#license">License</a></li>
+  </ol>
+</details>
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+Omnitutor transforms your lesson plans into a personal AI tutor for every student. This powerful online tool allows professors to upload course materials, creating a customized learning experience that supplements classroom instruction. With Omnitutor, students are empowered to master complex topics by learning at their own pace and asking as many questions as needed to achieve full understanding.
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+
+<!-- GETTING STARTED -->
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+* Node.js: v18.18.0 or higher
+* npm
+* React: v19.0.0 or higher
+* TypeScript: v5.0 or higher
+* Supabase account and API key
+* Clerk account and API key
+* Vapi AI account and API key
 
-```bash
+### Installation
+```sh
+git clone https://github.com/Savant35/omnitutorai.git
+cd omnitutorai/
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### .env File
+<p>Create a new file named <b>.env.local</b> in the root of your project and add the following content:</p>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+NEXT_PUBLIC_CLERK_SIGN_UP_URL=
+NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=
+CLERK_SECRET_KEY=
+NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+NEXT_PUBLIC_CLERK_SIGN_IN_FALLBACK_REDIRECT_URL=/
+NEXT_PUBLIC_CLERK_SIGN_UP_FALLBACK_REDIRECT_URL=/
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+NEXT_PUBLIC_VAPI_WEB_TOKEN=
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Learn More
+## preview 
+<img width="1465" alt="Screenshot 2023-04-30 at 12 54 06 PM" src="https://user-images.githubusercontent.com/121364807/235366060-4e8c07d5-5ff8-46c6-a8c0-3456da3d7c78.png">
+<img width="1440" alt="Screenshot 2023-04-30 at 12 55 02 PM" src="https://user-images.githubusercontent.com/121364807/235366108-8aad2a5b-8a49-4e36-8475-ff68b45c3338.png">
+<img width="1447" alt="Screenshot 2023-04-30 at 12 55 41 PM" src="https://user-images.githubusercontent.com/121364807/235366082-8c84b1b5-5319-4d39-8c1f-6f02ffe74c0b.png">
 
-To learn more about Next.js, take a look at the following resources:
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<!-- LICENSE -->
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Distributed under the MIT License.
 
-## Deploy on Vercel
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
