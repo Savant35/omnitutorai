@@ -81,9 +81,16 @@ NEXT_PUBLIC_VAPI_WEB_TOKEN=
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## preview 
-<img width="1465" alt="Screenshot 2023-04-30 at 12 54 06 PM" src="https://user-images.githubusercontent.com/121364807/235366060-4e8c07d5-5ff8-46c6-a8c0-3456da3d7c78.png">
-<img width="1440" alt="Screenshot 2023-04-30 at 12 55 02 PM" src="https://user-images.githubusercontent.com/121364807/235366108-8aad2a5b-8a49-4e36-8475-ff68b45c3338.png">
-<img width="1447" alt="Screenshot 2023-04-30 at 12 55 41 PM" src="https://user-images.githubusercontent.com/121364807/235366082-8c84b1b5-5319-4d39-8c1f-6f02ffe74c0b.png">
+
+
+<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;">
+<img src="https://github.com/user-attachments/assets/bf537723-33f9-49b4-a36e-5ce7f83a0e6f" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/3cfc6d3e-5fd2-46db-97c6-a580936554ee" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/1e28f1e6-ff09-410d-b8b9-a75faa0963dd" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/f9d13f43-68af-4887-af66-6d17ef5460a8" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/f0d519b2-49b2-4a67-9267-bb80b409dfff" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
+<img src="https://github.com/user-attachments/assets/528cdfc7-1532-4b34-81ff-c3e25bc27d5b" alt="Image" style="width: 325px; height: 300px; object-fit: cover;">
+</div>
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
